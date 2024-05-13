@@ -74,35 +74,44 @@ class TicTacToe:
 
         # Si la grilla está llena, el juego termina en empate
         return 0
-
-    def maxValue(self):
+    
+    # APLICANDO EL ALGORITMO DE MINIMAX
+    def maxValue(self, alpha, beta):
         if self.terminal():
             return self.utilidad()
         v = -math.inf
         for action in self.actions():
-            v=max(v, self.result(action).minValue())
+            v = max(v, self.result(action).minValue(alpha, beta))
+            alpha = max(alpha, v)
+            if beta <= alpha:
+                break  # Poda alfa
         return v
 
-    def minValue(self):
+    def minValue(self, alpha, beta):
         if self.terminal():
             return self.utilidad()
         v = math.inf
         for action in self.actions():
-            v=min(v, self.result(action).maxValue())
+            v = min(v, self.result(action).maxValue(alpha, beta))
+            beta = min(beta, v)
+            if beta <= alpha:
+                break  # Poda beta
         return v
 
     def mejor_accion(self):
         acciones = self.actions()
         best_value = math.inf
-        best_action = None
+        best_action = acciones[0]
+        alpha = -math.inf
+        beta = math.inf
 
         for action in acciones:
-            value = self.result(action).minValue()
-            # print(value)
+            value = self.result(action).minValue(alpha, beta)
+            print(value)
             if value < best_value:
                 best_action = action
-                best_value = value            
-
+                best_value = value
+            beta = min(beta, best_value)
         return best_action
 
 
