@@ -1,4 +1,5 @@
 import math
+from os import system
 import numpy as np
 
 class TicTacToe:
@@ -118,7 +119,7 @@ def juego():
                     row = int(input("Ingrese la fila (1-3): ")) - 1
                     col = int(input("Ingrese la columna (1-3): ")) - 1
                     state_game[row][col] = 1
-                    if np.where(game.actions() == state_game) :
+                    if np.any(np.all(state_game == game.actions(), axis=(1,2))):
                         break
                     else:
                         print("Movimiento inválido. Intente de nuevo.")
@@ -137,6 +138,10 @@ def juego():
         print("¡Empate!")
     else:
         print(f"¡El ganador es el jugador {winner}!")
+
+    if input('Desea reiniciar el juego? s/n: ') == 's':
+        system("cls")
+        juego()
 
 if __name__ == "__main__":
     juego()
