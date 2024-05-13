@@ -107,7 +107,7 @@ class TicTacToe:
 
         for action in acciones:
             value = self.result(action).minValue(alpha, beta)
-            print(value)
+            
             if value < best_value:
                 best_action = action
                 best_value = value
